@@ -63,7 +63,7 @@ to see the JSON response.
 
 ## 🧪 (Optional) How to Run Tests
 
-If you implemented tests, run:
+To run:
 
 ```bash
 pytest
