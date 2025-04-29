@@ -2,7 +2,7 @@
 
 **Betr Beta - FastAPI Backend App**
 
-This is a simple production-grade backend built with FastAPI as part of a volunteer onboarding assessment.  
+This is a simple production-grade backend built with FastAPI.  
 It provides a REST API endpoint that returns an address, where the postcode is read dynamically from environment variables.
 
 ## 📦 Project Description
