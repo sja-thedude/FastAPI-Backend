@@ -5,6 +5,8 @@
 This is a simple production-grade backend built with FastAPI.  
 It provides a REST API endpoint that returns an address, where the postcode is read dynamically from environment variables.
 
+---
+
 ## 📦 Project Description
 
 - A FastAPI app exposing a single HTTPS GET `/address` endpoint.
@@ -12,79 +14,169 @@ It provides a REST API endpoint that returns an address, where the postcode is r
 - `postcode` is read from environment variables to make the app dynamic and secure.
 - Basic production practices are applied, like using environment variables, clean code structure, and separation of concerns.
 
-## Video Demo
+---
 
-[Here](https://drive.google.com/file/d/1o00mj09iTNCFnHZ8Weaocd5hWCNE_IkN/view?usp=sharing)
+## 🎥 Video Demo
 
-## live
+[Watch Here](https://drive.google.com/file/d/1o00mj09iTNCFnHZ8Weaocd5hWCNE_IkN/view?usp=sharing)
 
-[Here](https://fastapi-app-583231195079.us-central1.run.app/address)
+---
 
-## 🔧 How to Install Dependencies
+## 🌐 Live Demo
+
+[Open App](https://fastapi-app-583231195079.us-central1.run.app/address)
+
+---
+
+## 📦 Installation
+
+Install dependencies:
 
 ```bash
 pip install fastapi uvicorn python-dotenv
 ```
 
-For optional testing:
+Optional testing packages:
 
 ```bash
 pip install pytest httpx
 ```
 
-## 🌍 How to Set Environment Variables
+---
 
-Create a `.env` file in the project root with the following content:
+## 🌍 Environment Variables
 
-```
+Create a `.env` file in the root directory:
+
+```env
 POSTCODE=12345
 ```
 
-Alternatively, you can set environment variables manually in your terminal:
+Or set manually:
 
 ```bash
-export POSTCODE=12345  # Linux/macOS
+export POSTCODE=12345  # macOS/Linux
 set POSTCODE=12345     # Windows
 ```
 
-## 🚀 How to Run the Server
+---
 
-From the project root directory, run:
+## 🚀 Run Locally
+
+Start the server:
 
 ```bash
 uvicorn app.main:app --reload
 ```
 
-This will start the server locally at `http://127.0.0.1:8000`.
+Open in browser:
 
-Then, navigate to:  
-`http://127.0.0.1:8000/address`  
-to see the JSON response.
+```
+http://127.0.0.1:8000/address
+```
 
-## 🔒 Production Practices Applied
+---
 
-- **Environment Variables:** Sensitive data like postcode is kept outside the codebase using `.env` files.
-- **Clean Project Structure:** Code organized into an `app` directory for scalability.
-- **Dependency Management:** Only essential packages installed and documented.
-- **Best Practices:** Using `uvicorn` as an ASGI server, and `python-dotenv` to manage environment variables securely.
-- **Version Control:** GitHub repository to track changes and updates.
+## 🔐 Production Practices Used
 
-## 🧪 (Optional) How to Run Tests
+- `.env` file for configuration
+- Clean file structure under `/app`
+- Minimal dependencies
+- `python-dotenv` for secure env var management
+- `uvicorn` as ASGI server
+- Version-controlled via GitHub
 
-To run:
+---
+
+## ☁️ Deploy to Google Cloud Run (HTTPS Enabled)
+
+### 1. ✅ Prerequisites
+
+- A [Google Cloud](https://console.cloud.google.com/) account
+- Enable Cloud Run, Cloud Build, and Artifact Registry APIs
+- Install [Google Cloud SDK](https://cloud.google.com/sdk/docs/install)
+- Run `gcloud init` and authenticate
+
+### 2. 🏗 Prepare Your Project
+
+**Directory Structure:**
+
+```
+FastAPI-Backend/
+├── app/
+│   └── main.py
+├── .env
+├── Dockerfile
+└── requirements.txt
+```
+
+**Dockerfile:**
+
+```Dockerfile
+FROM python:3.11-slim
+
+WORKDIR /code
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8080"]
+```
+
+**requirements.txt:**
+
+```
+fastapi
+uvicorn
+python-dotenv
+```
+
+### 3. 🐳 Build and Deploy
+
+1. **Build & push container:**
+
+   ```bash
+   gcloud builds submit --tag gcr.io/YOUR_PROJECT_ID/fastapi-backend
+   ```
+
+2. **Deploy to Cloud Run:**
+
+   ```bash
+   gcloud run deploy fastapi-backend \
+     --image gcr.io/YOUR_PROJECT_ID/fastapi-backend \
+     --platform managed \
+     --region us-central1 \
+     --allow-unauthenticated \
+     --set-env-vars POSTCODE=12345
+   ```
+
+3. After deployment, you'll get a URL like:
+   ```
+   https://fastapi-backend-<hash>-<region>.run.app
+   ```
+
+### ✅ TLS Support
+
+Google Cloud Run **automatically** provisions HTTPS for you — no extra setup needed!
+
+---
+
+## 🧪 Run Tests (Optional)
 
 ```bash
 pytest
 ```
 
-Tests will verify that the `/address` endpoint returns the correct JSON structure.
+---
 
-### 📬 Endpoint
+## 📬 Endpoint
 
-- GET /address
-- Returns JSON:
+**GET /address**  
+Returns:
 
-```
+```json
 {
   "address": {
     "street": "Main Street",
@@ -94,7 +186,10 @@ Tests will verify that the `/address` endpoint returns the correct JSON structur
 }
 ```
 
-## 📎 Notes
+---
 
-- This project is meant for demonstration purposes.
-- Can be extended easily to support more complex features like authentication, database integration, and cloud deployment.
+## 📌 Notes
+
+- Designed for educational/demo purposes.
+- Easily extensible: Add routes, auth, database, etc.
+- Secure, serverless HTTPS out of the box using Cloud Run.
