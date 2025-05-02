@@ -16,6 +16,10 @@ It provides a REST API endpoint that returns an address, where the postcode is r
 
 [Here](https://drive.google.com/file/d/1o00mj09iTNCFnHZ8Weaocd5hWCNE_IkN/view?usp=sharing)
 
+## live
+
+[Here](https://fastapi-app-583231195079.us-central1.run.app/address)
+
 ## 🔧 How to Install Dependencies
 
 ```bash
