@@ -133,6 +133,23 @@ uvicorn
 python-dotenv
 ```
 
+### Installation Commands for Gunicorn and Uvicorn:
+
+To install Gunicorn with Uvicorn for running FastAPI in production, run the following:
+
+```
+pip install gunicorn uvicorn
+```
+
+To start the app using Gunicorn with Uvicorn workers, use the following command:
+
+```
+gunicorn app.main:app \
+    --workers 4 \
+    --worker-class uvicorn.workers.UvicornWorker \
+    --bind 0.0.0.0:8000
+```
+
 ### 3. 🐳 Build and Deploy
 
 1. **Build & push container:**
